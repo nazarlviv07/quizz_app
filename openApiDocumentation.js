@@ -84,6 +84,48 @@ module.exports = {
             }
           }
         }
+      },
+      post: {
+        tags: ['Quiz operations'],
+        description: 'Save quiz',
+        operationId: 'saveQuiz',
+        parameters: [],
+        requestBody: {
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/SaveQuizDto'
+              }
+            }
+          },
+          required: true
+        },
+        responses: {
+          '200': {
+            description: 'Save quiz',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/Quiz'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Missing parameters',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/Error'
+                },
+                example: {
+                  message: 'companyId is missing',
+                  internal_code: 'missing_parameters'
+                }
+              }
+            }
+          }
+        }
       }
     },
     '/users': {
@@ -226,11 +268,32 @@ module.exports = {
           startTime: {
             $ref: '#/components/schemas/dateTime'
           },
+          questionNumber: {
+            type: 'integer',
+            example: 3,
+          },
+          totalQuestionsNumber: {
+            type: 'integer',
+            example: 10,
+          },
           questionsWithOptions: {
             type: 'array',
             items: {
               $ref: '#/components/schemas/questionsWithOptions'
             }
+          },
+        }
+      },
+      SaveQuizDto: {
+        type: 'object',
+        properties: {
+          quizId: {
+            type: 'integer',
+            example: 3,
+          },
+          answear: {
+            type: 'string',
+            example: "=== is strict equal",
           },
         }
       },
